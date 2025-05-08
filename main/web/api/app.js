@@ -9,11 +9,10 @@ const socketIo = require('socket.io');
 require('dotenv').config();
 const app = express();
 const port = 3000;
-
 app.use(express.json()); // Para recibir datos JSON
 
 const db = new Client({
-    connectionString: Postgres.DATABASE_URL, 
+    connectionString: Postgres.env.DATABASE_URL, 
     ssl: { rejectUnauthorized: false } // Asegura conexión segura
 });
 
@@ -22,7 +21,7 @@ db.connect()
   .then(() => console.log('Conexión a la base de datos PostgreSQL exitosa'))
   .catch(err => console.error('Error al conectar a la base de datos:', err));
 
-// Crear nuevo usuario
+// Crear nuevo usuario}{{{{{{{{{{{{{{{{-}}}}}}}}}}}}}}}}
 app.post('/users', async (req, res) => {
     const { username, password} = req.body;
     const hashedPassword = await bcryptjs.hash(password, 10);
