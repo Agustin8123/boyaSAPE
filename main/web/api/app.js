@@ -4,6 +4,7 @@ const { Client } = require('pg');
 const bcryptjs = require('bcryptjs');
 
 const http = require('http');
+const path = require('path');
 const socketIo = require('socket.io');
 
 require('dotenv').config();
