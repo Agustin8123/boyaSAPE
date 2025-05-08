@@ -12,7 +12,7 @@ const port = 3000;
 app.use(express.json()); // Para recibir datos JSON
 
 const db = new Client({
-    connectionString: Postgres.env.DATABASE_URL, 
+    connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false } // Asegura conexión segura
 });
 
