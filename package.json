@@ -1,0 +1,19 @@
+{
+  "name": "boya-s.a.p.e",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node main/web/api/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "http": "^0.0.1-security",
+    "pg": "^8.15.6",
+    "socket.io": "^4.8.1"
+  }
+}
