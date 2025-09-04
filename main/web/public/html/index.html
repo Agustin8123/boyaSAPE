@@ -1,63 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/fixer.css">
-    <link rel="stylesheet" href="../styles/styles.css">
-    <title>Inicio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Inicio - Boya S.A.P.E</title>
+  <link rel="stylesheet" href="/styles/styles.css" />
 </head>
 <body>
+  <header>
+    <h1>Configuración inicial</h1>
+    <button id="btnCuenta" style="display:none;" onclick="logoutUser();">Mi cuenta</button>
+  </header>
 
-    <Header>
-        <h1>Configuración inicial</h1>
-    </Header>
-    
-    <section id="sesion" class="box" style="display: none;">
-        <h3>Inicia sesión o crea tu cuenta</h3>
-        <input type="text" id="email" placeholder="ejemplo@correo.com"></input>
-        <input type="password" name="password" id="password" placeholder="12345678"></input>
+  <main>
+    <section id="sesion" class="box">
+      <h3>Inicia sesión o crea tu cuenta</h3>
+      <input type="text" id="emailInput" placeholder="ejemplo@correo.com" />
+      <input type="password" id="passwordInput" placeholder="Contraseña" />
 
-        <button onclick="">Iniciar sesión</button>
-        <button onclick="">Crear cuenta</button>
+      <div class="checkbox">
+        <input type="checkbox" id="rememberMe" />
+        <label for="rememberMe">Recordar sesión</label>
+      </div>
+
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button onclick="loginUser();">Iniciar sesión</button>
+        <button onclick="addNewUser();">Crear cuenta</button>
+      </div>
     </section>
 
-    <section id="dispositivos" class="box">
-        <h3>Tus dispositivos</h3>
-        
-        <div id="dispLista" class="lBox">
-            <!--aca se carga la lista de dispositivos-->
+    <section id="dispositivos" class="box" style="display:none;">
+      <h3>Tus dispositivos</h3>
 
-            <ul>
-                <li><button onclick="menuConfigDisp();">lorrem</button></li>
-                <li><button onclick="">lorem</button></li>
-                <li><button onclick="">lorem</button></li>
-            </ul>
-        </div>
+      <div id="dispLista" class="lBox">
+        <!-- acá se carga la lista de dispositivos -->
+      </div>
 
-        <button onclick="">Añadir dispositivos</button>
-        <button onclick="">Eliminar dispositivos</button>
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button onclick="addDispositivo();">Añadir dispositivo</button>
+      </div>
     </section>
 
-    <section id="configuracion" class="box" style="display: none;">
-        <h3>Configuración</h3>
-
-        <input type="text" id="nombre" placeholder="Elige un nombre para el dispositivo"></input>
-        <input type="text" id="numero de serie" placeholder="Numero de serie: xxx-xxx-xxx"></input>
-
-        <button class="boton" onclick="menuModelo();">Modelo del dispositivo</button>
-        <div id="modelo" class="lBox" style="display: none; background-color: transparent; box-shadow: none;">
-            <button class="boton" id="mBoya"style="margin-left: -8px; margin-top: -10px; width: 200px;" onclick="menuBoya();">boya S.A.P.E</button>
-        </div>
-
-        <div id="confLista" class="lBox">
-            <!--aca se carga la lista de configuracion-->
-            <iframe id="boya" src="../html/boya.html" style="width: 100%; height: 100%; border: none; display: none;"></iframe>
-        </div>
-    
-        <button onclick="">Guardar configuracion</button>
+    <section id="configuracion" class="box" style="display:none;">
+      <h3>Configuración</h3>
+      <input type="text" id="nombre" placeholder="Elige un nombre para el dispositivo" />
+      <input type="text" id="numero_serie" placeholder="Número de serie: xxx-xxx-xxx" />
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button onclick="alert('Función guardar pendiente');">Guardar configuración</button>
         <button onclick="menuConfigDisp2();">Volver</button>
+      </div>
     </section>
+  </main>
+
+  <script src="/scripts/scripts.js"></script>
 </body>
-<script src="../scripts/scriptsbt.js"></script>
 </html>

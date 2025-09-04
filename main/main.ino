@@ -1,130 +1,162 @@
-// Basic demo for accelerometer readings from Adafruit MPU6050
-
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
+#include <WiFi.h>
+#include <WebServer.h>
+#include <Preferences.h>
 
 Adafruit_MPU6050 mpu;
+Preferences prefs;
 
-void setup(void) {
+#define LED_PIN   19
+#define BOOT_BTN  0   // BOOT button del ESP32
+
+// ===== Declaración de tareas =====
+void TaskMPU(void *pvParameters);   // núcleo 1
+void TaskWiFi(void *pvParameters);  // núcleo 0
+
+// ===== WebServer para configuración =====
+WebServer server(80);
+
+// ===== Función de AP temporal =====
+void startAP() {
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP("ESP32_Config", "12345678");
+  Serial.println("AP iniciado -> SSID: ESP32_Config, PASS: 12345678");
+  Serial.println("Conéctate y entra a http://192.168.4.1/");
+
+  // Formulario de configuración
+  server.on("/", HTTP_GET, []() {
+    String html =
+      "<!DOCTYPE html><html><head><meta charset='utf-8'>"
+      "<title>Configurar WiFi</title></head><body>"
+      "<h2>Configurar WiFi</h2>"
+      "<form action='/save' method='POST'>"
+      "SSID: <input type='text' name='ssid'><br><br>"
+      "PASS: <input type='password' name='pass'><br><br>"
+      "<input type='submit' value='Guardar'>"
+      "</form>"
+      "</body></html>";
+    server.send(200, "text/html", html);
+  });
+
+  // Guardar credenciales
+  server.on("/save", HTTP_POST, []() {
+    String ssid = server.arg("ssid");
+    String pass = server.arg("pass");
+    if (ssid.length() > 0 && pass.length() > 0) {
+      prefs.putString("ssid", ssid);
+      prefs.putString("pass", pass);
+      server.send(200, "text/html", "Credenciales guardadas. Reiniciando...");
+      delay(1000);
+      ESP.restart();
+    } else {
+      server.send(200, "text/html", "Datos inválidos, intenta de nuevo.");
+    }
+  });
+
+  server.begin();
+}
+
+// ===== Función de conexión a WiFi =====
+void connectWiFi(const char *ssid, const char *pass) {
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, pass);
+
+  Serial.printf("Conectando a %s", ssid);
+  int intentos = 0;
+  while (WiFi.status() != WL_CONNECTED && intentos < 20) {
+    delay(500);
+    Serial.print(".");
+    intentos++;
+  }
+  Serial.println();
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.print("Conectado! IP: ");
+    Serial.println(WiFi.localIP());
+  } else {
+    Serial.println("Fallo conexión, volviendo a AP");
+    startAP();
+  }
+}
+
+// ===== SETUP =====
+void setup() {
   Wire.begin(21, 22);
-  pinMode(19, OUTPUT);
-
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BOOT_BTN, INPUT_PULLUP);
   Serial.begin(115200);
-  while (!Serial)
-    delay(10); // will pause Zero, Leonardo, etc until serial console opens
+  prefs.begin("wifi", false);
 
-  Serial.println("Adafruit MPU6050 test!");
+  // Reset de credenciales si BOOT está presionado
+  if (digitalRead(BOOT_BTN) == LOW) {
+    prefs.clear();
+    Serial.println("Credenciales borradas!");
+  }
 
-  // Try to initialize!
+  // Ver si hay credenciales guardadas
+  String ssid = prefs.getString("ssid", "");
+  String pass = prefs.getString("pass", "");
+
+  if (ssid == "" || pass == "") {
+    Serial.println("No hay credenciales guardadas, iniciando AP...");
+    startAP();
+  } else {
+    connectWiFi(ssid.c_str(), pass.c_str());
+  }
+
+  // Inicialización del MPU
   if (!mpu.begin()) {
     Serial.println("Failed to find MPU6050 chip");
-    while (1) {
-      delay(10);
-    }
+    while (1) { delay(10); }
   }
   Serial.println("MPU6050 Found!");
-
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
-  Serial.print("Accelerometer range set to: ");
-  switch (mpu.getAccelerometerRange()) {
-  case MPU6050_RANGE_2_G:
-    Serial.println("+-2G");
-    break;
-  case MPU6050_RANGE_4_G:
-    Serial.println("+-4G");
-    break;
-  case MPU6050_RANGE_8_G:
-    Serial.println("+-8G");
-    break;
-  case MPU6050_RANGE_16_G:
-    Serial.println("+-16G");
-    break;
-  }
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
-  Serial.print("Gyro range set to: ");
-  switch (mpu.getGyroRange()) {
-  case MPU6050_RANGE_250_DEG:
-    Serial.println("+- 250 deg/s");
-    break;
-  case MPU6050_RANGE_500_DEG:
-    Serial.println("+- 500 deg/s");
-    break;
-  case MPU6050_RANGE_1000_DEG:
-    Serial.println("+- 1000 deg/s");
-    break;
-  case MPU6050_RANGE_2000_DEG:
-    Serial.println("+- 2000 deg/s");
-    break;
-  }
-
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
-  Serial.print("Filter bandwidth set to: ");
-  switch (mpu.getFilterBandwidth()) {
-  case MPU6050_BAND_260_HZ:
-    Serial.println("260 Hz");
-    break;
-  case MPU6050_BAND_184_HZ:
-    Serial.println("184 Hz");
-    break;
-  case MPU6050_BAND_94_HZ:
-    Serial.println("94 Hz");
-    break;
-  case MPU6050_BAND_44_HZ:
-    Serial.println("44 Hz");
-    break;
-  case MPU6050_BAND_21_HZ:
-    Serial.println("21 Hz");
-    break;
-  case MPU6050_BAND_10_HZ:
-    Serial.println("10 Hz");
-    break;
-  case MPU6050_BAND_5_HZ:
-    Serial.println("5 Hz");
-    break;
-  }
 
-  Serial.println("");
-  delay(100);
+  // ===== Crear tareas en distintos cores =====
+  xTaskCreatePinnedToCore(TaskMPU, "TaskMPU", 4096, NULL, 1, NULL, 1);
+  xTaskCreatePinnedToCore(TaskWiFi, "TaskWiFi", 4096, NULL, 1, NULL, 0);
 }
 
 void loop() {
-  sensors_event_t a, g, temp;
-  mpu.getEvent(&a, &g, &temp);
+  // vacío, todo se maneja con FreeRTOS
+}
 
-  Serial.print("Acceleration X: ");
-  Serial.print(a.acceleration.x);
-  Serial.print(", Y: ");
-  Serial.print(a.acceleration.y);
-  Serial.print(", Z: ");
-  Serial.print(a.acceleration.z);
-  Serial.println(" m/s^2");
+// ===== Tarea para MPU (core 1) =====
+void TaskMPU(void *pvParameters) {
+  for (;;) {
+    sensors_event_t a, g, temp;
+    mpu.getEvent(&a, &g, &temp);
 
-  Serial.print("Rotation X: ");
-  Serial.print(g.gyro.x);
-  Serial.print(", Y: ");
-  Serial.print(g.gyro.y);
-  Serial.print(", Z: ");
-  Serial.print(g.gyro.z);
-  Serial.println(" rad/s");
+    Serial.printf(
+      "Acceleration -> X: %.2f, Y: %.2f, Z: %.2f m/s^2\n"
+      "Rotation    -> X: %.2f, Y: %.2f, Z: %.2f rad/s\n"
+      "Temperature -> %.2f °C\n\n",
+      a.acceleration.x, a.acceleration.y, a.acceleration.z,
+      g.gyro.x, g.gyro.y, g.gyro.z,
+      temp.temperature
+    );
 
-  Serial.print("Temperature: ");
-  Serial.print(temp.temperature);
-  Serial.println(" degC");
+    if ( abs(a.acceleration.x) > 10 || abs(a.acceleration.y) > 10 || abs(a.acceleration.z) > 10 ||
+         abs(g.gyro.x) > 1 || abs(g.gyro.y) > 1 || abs(g.gyro.z) < -10 ||
+         abs(a.acceleration.x) < -10 || abs(a.acceleration.y) < -10 || abs(a.acceleration.z) < -10 ||
+         abs(g.gyro.x) < -1 || abs(g.gyro.y) < -1 || abs(g.gyro.z) < -10 ) {
+      digitalWrite(LED_PIN, HIGH);
+    } else {
+      digitalWrite(LED_PIN, LOW);
+    }
 
-  Serial.println("");
-
-  // Si cualquier valor de aceleración o rotación supera 10 (positivo o negativo)
-  if (
-    abs(a.acceleration.x) > 10 || abs(a.acceleration.y) > 10 || abs(a.acceleration.z) > 10 ||
-    abs(g.gyro.x) > 1 || abs(g.gyro.y) > 1 || abs(g.gyro.z) < -10 || abs(a.acceleration.x) < -10 || 
-    abs(a.acceleration.y) < -10 || abs(a.acceleration.z) < -10 ||
-    abs(g.gyro.x) < -1 || abs(g.gyro.y) < -1 || abs(g.gyro.z) < -10
-  ) {
-    digitalWrite(19, HIGH);
-  } else {
-    digitalWrite(19, LOW);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
   }
+}
 
-  delay(500);
+// ===== Tarea para WiFi + servidor (core 0) =====
+void TaskWiFi(void *pvParameters) {
+  for (;;) {
+    server.handleClient();   // atiende las peticiones web
+    vTaskDelay(10 / portTICK_PERIOD_MS);
+  }
 }
