@@ -1,0 +1,172 @@
+body {
+    background-color: rgb(20, 18, 18);
+    color: rgb(235, 230, 230);
+
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: navy;
+    padding: 15px;
+    font-variant: small-caps;
+}
+
+.box {
+    margin: 0 auto;
+    width: 320px;
+
+    padding: 10px;
+    margin-top: 10px;
+    
+    border: 2px dotted rgb(34, 30, 30);
+    border-radius: 10px;
+}
+
+.lBox {
+    margin: 0 auto;
+    width: 280px;
+
+    padding: 10px;
+    margin-top: 10px;
+    
+    background-color: rgb(34, 30, 30);
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.685);
+}
+
+.box h3{
+    background-color: rgb(34, 30, 30);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.685);
+
+    width: 270px;
+
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.box button {
+    margin-top: 15px;
+}
+
+#modelo {
+    margin-top: -10px;
+    width: 245px;
+}
+
+ul {
+    list-style: none;
+    padding: 10px;
+}
+
+li {
+    background-color: rgb(34, 30, 30);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.685);
+    
+    border: none;
+    border-radius: 5px;
+    
+    margin-bottom: 5px;
+}
+
+li button{
+    width: 100%;
+    height: 100%; 
+    
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    font-weight: normal;
+
+    box-shadow: none;
+    margin-bottom: 12px;
+}
+
+.boton {
+    width: 260px;
+    height: 100%; 
+    
+    border: none;
+    background-color: rgb(34, 30, 30);
+    font-weight: normal;
+
+    box-shadow: none;
+    margin-bottom: 12px;
+}
+
+button {
+    width: 120px;
+    height: 60px;
+
+    padding: 5px;
+    border-radius: 10px;
+
+    box-shadow: none;
+    border: none;
+
+    font-weight: bold;
+
+    background-color: navy;
+    color: white;
+
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.685);
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: darkblue;
+    transform: scale(1.02);
+    transition: 0.2s ease;
+}
+
+li:hover {
+    cursor: pointer;
+    background-color:  rgb(36, 33, 33);
+    transform: scale(1.02);
+    transition: 0.2s ease;
+}
+
+li button:hover {
+    background-color: rgba(255, 255, 255, 0);  
+}
+
+
+.boton:hover {
+    cursor: pointer;
+    background-color:  rgb(36, 33, 33);
+    transform: scale(1.02);
+    transition: 0.2s ease;
+}
+
+input {
+    width: 250px;
+    height: 20px;
+
+    background-color: rgb(34, 30, 30);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.685);
+    color: white;
+
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.checkbox {
+    display: flex;
+    margin-top: 20px;
+    margin-left: -30px;
+}
+
+input[type="checkbox"]:checked {
+    accent-color: navy; /* o el color que quieras */
+}
+
+#rememberMe {
+    margin-right: -100px;
+    margin-top: 0px;
+}
