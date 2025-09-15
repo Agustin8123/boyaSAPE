@@ -13,6 +13,7 @@
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.6.1",
     "express": "^5.1.0",
+    "graphql-request": "^7.2.0",
     "http": "^0.0.1-security",
     "path": "^0.12.7",
     "pg": "^8.16.3",

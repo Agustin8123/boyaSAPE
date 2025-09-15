@@ -7,6 +7,10 @@ const bcryptjs = require('bcryptjs');
 const http = require('http');
 const socketIo = require('socket.io');
 
+// --- smnQL ---
+const { request, gql } = require('graphql-request');
+const SMN_ENDPOINT = "https://api.smn.gob.ar/graphql";
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -58,7 +62,6 @@ app.post('/users', async (req, res) => {
     return res.status(201).json({ id: userId, email: username });
   } catch (err) {
     console.error('Error al insertar usuario:', err);
-    // manejar unique violation
     if (err.code === '23505') return res.status(409).json({ error: 'Usuario ya existe' });
     return res.status(500).json({ error: 'Error al crear el usuario' });
   }
@@ -79,7 +82,6 @@ app.post('/login', async (req, res) => {
       const user = results.rows[0];
       const isValidPassword = await bcryptjs.compare(password, user.password);
       if (isValidPassword) {
-        // Devuelvo email e id (el frontend espera email)
         return res.status(200).json({ email: user.username, id: user.id });
       } else {
         return res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
@@ -93,7 +95,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Obtener detalles de usuario (frontend lo pide)
+// Obtener detalles de usuario
 app.post('/getUserDetails', async (req, res) => {
   if (!dbReady) return res.status(500).json({ error: 'DB no disponible' });
 
@@ -165,14 +167,80 @@ app.delete('/devices/:id', async (req, res) => {
   }
 });
 
-// Resto de rutas estáticas las maneja express.static (public)
+// -------- smnQL integration: pronóstico y acción si >75% lluvia --------
+app.get('/raincheck/:localidad/:dia', async (req, res) => {
+  const localidad = req.params.localidad;
+  let dia = parseInt(req.params.dia); // 1 a 4
+  if (isNaN(dia) || dia < 1 || dia > 4) dia = 1;
 
-// Para cualquier otra ruta no existente, devolver index (spa-friendly)
+  const query = gql`
+    query ($loc: String!) {
+      forecast(localidad: $loc) {
+        _id
+        timestamp
+        date_time
+        location_id
+        forecast {
+          date
+          temp_min
+          temp_max
+          morning {
+            weather_id
+            description
+            precipitationProbability
+          }
+          afternoon {
+            weather_id
+            description
+            precipitationProbability
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const data = await request(SMN_ENDPOINT, query, { loc: localidad });
+
+    if (!data.forecast || data.forecast.length === 0) {
+      return res.status(404).json({ error: "No hay pronóstico disponible" });
+    }
+
+    const dayForecast = data.forecast[0].forecast[dia - 1];
+    if (!dayForecast) return res.status(404).json({ error: "Pronóstico para ese día no disponible" });
+
+    const probMorning = dayForecast.morning?.precipitationProbability || 0;
+    const probAfternoon = dayForecast.afternoon?.precipitationProbability || 0;
+    const prob = Math.max(probMorning, probAfternoon);
+
+    let accion = null;
+    if (prob > 75) {
+      accion = "⚡ Acción ejecutada porque probabilidad > 75%";
+      console.log(accion);
+    }
+
+    return res.json({
+      date: dayForecast.date,
+      temp_min: dayForecast.temp_min,
+      temp_max: dayForecast.temp_max,
+      morning: dayForecast.morning,
+      afternoon: dayForecast.afternoon,
+      probabilidad: prob,
+      accion
+    });
+
+  } catch (err) {
+    console.error("Error al consultar smnQL:", err);
+    return res.status(500).json({ error: "No se pudo obtener el pronóstico" });
+  }
+});
+
+// Resto de rutas estáticas las maneja express.static (public)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Crear servidor y socket.io (opcional)
+// Crear servidor y socket.io
 const server = http.createServer(app);
 const io = socketIo(server);
 
