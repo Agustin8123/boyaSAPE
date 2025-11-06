@@ -1,0 +1,30 @@
+*, body {
+    font-family: "Noto Sans", sans-serif;
+}
+
+.pileta {
+    background-image: url(pileta.jpg);
+    filter: brightness(95%);
+}
+
+.piletap {
+    color: rgb(226, 226, 226);
+    background-color: rgba(0, 0, 0, 0.377);
+    padding: 15px;
+    border-radius: 20px;
+    width: 45%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 20px 5px black;
+}
+
+.piletat {
+    color: rgb(0, 142, 236);
+    background-color: rgba(0, 0, 0, 0.377);
+    padding: 15px;
+    border-radius: 20px;
+    width: 45%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 20px 5px black;
+}
