@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S.A.P.E</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Librería AOS (animaciones al hacer scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="logo.png" type="image/jpg">
+
+  <style>
+    html { scroll-behavior: smooth; } /* Scroll suave */
+  </style>
+</head>
+
+<body class="bg-white text-black font-sans">
+
+  <!-- Encabezado -->
+  <header class="bg-blue-900 text-white p-6 shadow-md">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-bold">S.A.P.E</h1>
+      <nav>
+        <ul class="flex gap-6">
+          <li><a href="#alarma" class="hover:underline">Boya Wilson</a></li>
+          <li><a href="#mision" class="hover:underline">Nosotros</a></li>
+          <li><a href="#contacto" class="hover:underline">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sección Hero -->
+  <section class="bg-blue-100 text-blue-900 py-20 px-6 text-center" data-aos="fade-up">
+    <h2 class="text-4xl font-bold mb-4">Seguridad que podés confiar</h2>
+    <p class="text-lg mb-6">Protegé a tus seres queridos con nuestra boya Wilson en tu piscina.</p>
+    <a href="#productos" class="bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-full transform hover:scale-105 transition-all duration-300 inline-block">Ver producto</a>
+  </section>
+
+  <!-- Sección de Producto -->
+  <section id="productos" class="max-w-7xl mx-auto py-16 px-6 flex justify-center">
+
+    <div id="alarma" class="bg-white border border-blue-200 rounded-2xl p-6 shadow-md hover:shadow-2xl transition transform hover:-translate-y-1 max-w-md text-center" data-aos="fade-up">
+
+  <img src="boya.png"
+       class="rounded-xl mb-4 mx-auto w-72 shadow-2xl hover:shadow-blue-200 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300">
+
+  <h3 class="text-2xl font-semibold text-blue-900 mb-2">Boya Wilson</h3>
+  <p class="text-gray-700 mb-4">Alarma flotante para piscinas. Detecta el movimiento del agua para emitir alertas inmediatas.</p>
+
+  <ul class="text-sm text-gray-600 mb-4 list-disc list-inside text-left mx-auto w-max">
+    <li>Notificación móvil</li>
+    <li>Instalación sencilla</li>
+    <li>Diseño compacto</li>
+  </ul>
+
+  <a href="comprar.html"
+     class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800 transform hover:scale-105 transition-all inline-block">
+    Comprar ahora
+  </a>
+</div>
+
+  </section>
+
+  <!-- Sección de Misión -->
+  <section id="mision" class="bg-blue-50 py-16 px-6 text-center" data-aos="fade-up">
+    <h2 class="text-3xl font-bold text-blue-900 mb-4">Nuestra misión</h2>
+    <p class="max-w-2xl mx-auto text-gray-700 text-lg">En <strong>S.A.P.E</strong> trabajamos para brindar seguridad y tranquilidad en cualquier espacio. Detectamos el movimiento del agua de una piscina de forma inmediata y lo alertamos de forma sonora y mediante notificaciones al celular, permitiendo una respuesta rápida ante cualquier emergencia.</p>
+  </section>
+
+  <!-- Sección de Video -->
+  <section class="bg-white py-16 px-6" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-blue-900 mb-6">¿Cómo funciona nuestro producto?</h2>
+      <p class="text-gray-700 mb-6">Mirá este video para conocernos y conocer nuestra boya.</p>
+      <div class="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-lg">
+        <video class="w-full h-full rounded-xl shadow-lg" controls>
+          <source src="video.mp4" type="video/mp4">
+          Tu navegador no soporta la reproducción de video.
+        </video>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Sección de Comentarios de Usuarios con Carrusel -->
+<section class="bg-blue-50 py-16 px-6 text-center">
+  <h2 class="text-3xl font-bold text-blue-900 mb-8">Comentarios de nuestros usuarios</h2>
+
+  <!-- Contenedor del carrusel -->
+  <div class="overflow-x-auto flex gap-6 py-4 px-2 snap-x snap-mandatory">
+    <div class="bg-white p-6 rounded-xl min-w-[250px] snap-start shadow">
+      <p class="italic text-gray-700">"Desde que compre la boya, me siento mucho más tranquilo en casa."</p>
+      <h4 class="font-semibold text-blue-900 mt-4">— Juan P., Buenos Aires</h4>
+    </div>
+    <div class="bg-white p-6 rounded-xl min-w-[250px] snap-start shadow">
+      <p class="italic text-gray-700">"El servicio de atención fue excelente y la instalación muy fácil."</p>
+      <h4 class="font-semibold text-blue-900 mt-4">— María G., Córdoba</h4>
+    </div>
+    <div class="bg-white p-6 rounded-xl min-w-[250px] snap-start shadow">
+      <p class="italic text-gray-700">"Muy recomendable, detecta el movimiento del agua rápidamente y da tranquilidad."</p>
+      <h4 class="font-semibold text-blue-900 mt-4">— Pedro L., Rosario</h4>
+    </div>
+    <div class="bg-white p-6 rounded-xl min-w-[250px] snap-start shadow">
+      <p class="italic text-gray-700">"Compacta, fácil de usar y muy precisa."</p>
+      <h4 class="font-semibold text-blue-900 mt-4">— Carla M., Mendoza</h4>
+    </div>
+    <div class="bg-white p-6 rounded-xl min-w-[250px] snap-start shadow">
+      <p class="italic text-gray-700">"Un producto esencial para cualquier hogar."</p>
+      <h4 class="font-semibold text-blue-900 mt-4">— Luis R., Salta</h4>
+    </div>
+  </div>
+
+  <!-- Formulario para enviar nuevo comentario -->
+  <div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-md mt-12">
+    <h3 class="text-2xl font-semibold text-blue-900 mb-4 text-center">Dejá tu comentario</h3>
+    <form id="form-comentario" class="space-y-4">
+      <div>
+        <label for="nombreUser" class="block text-sm font-medium text-gray-700">Nombre</label>
+        <input type="text" id="nombreUser" name="nombreUser" required class="w-full border border-gray-300 p-2 rounded mt-1">
+      </div>
+      <div>
+        <label for="mensajeUser" class="block text-sm font-medium text-gray-700">Comentario</label>
+        <textarea id="mensajeUser" name="mensajeUser" rows="3" required class="w-full border border-gray-300 p-2 rounded mt-1"></textarea>
+      </div>
+      <button type="submit" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800 transform hover:scale-105 transition-all w-full">Enviar comentario</button>
+    </form>
+  </div>
+</section>
+
+<!-- Script para mostrar comentarios dinámicamente en el carrusel -->
+<script>
+  const form = document.getElementById('form-comentario');
+  const carrusel = document.querySelector('.overflow-x-auto');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById('nombreUser').value;
+    const mensaje = document.getElementById('mensajeUser').value;
+
+    // Crear nuevo comentario
+    const nuevoComentario = document.createElement('div');
+    nuevoComentario.classList.add('bg-white','p-6','rounded-xl','min-w-[250px]','snap-start','shadow','mt-4');
+    nuevoComentario.innerHTML = `<p class="italic text-gray-700">${mensaje}</p><h4 class="font-semibold text-blue-900 mt-4">— ${nombre}</h4>`;
+
+    // Agregar al carrusel
+    carrusel.appendChild(nuevoComentario);
+
+    // Limpiar formulario
+    form.reset();
+
+    // Desplazarse al nuevo comentario
+    nuevoComentario.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+  });
+</script>
+
+   <!-- Botón flotante WhatsApp -->
+  <a href="https://whatsapp.com/channel/0029Vb6Q6N7Chq6M9l9OeL2O" target="_blank"
+   class="fixed bottom-20 right-5 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+    stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M3 10a9 9 0 0118 0c0 4.7-3.9 8.5-8.5 8.5H5l-2 2v-2.5C3 15.5 3 10 3 10z" />
+  </svg>
+</a>
+
+   <!-- Sección ¿Cómo contactarnos? -->
+<section id="contacto" class="bg-blue-50 py-16 px-6">
+  <div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-md text-center">
+    <h3 class="text-2xl font-semibold text-blue-900 mb-6">¿Cómo contactarnos?</h3>
+
+    <div class="space-y-4 text-gray-700">
+      <p><strong>Teléfono:</strong> <a href="" class="text-blue-900 hover:underline">+54 9 3487 54-0890</a></p>
+      <p><strong>Email:</strong> <a href="s.a.p.e-soporte@gmail.com" class="text-blue-900 hover:underline">s.a.p.e-soporte@gmail.com</a></p>
+      <p><strong>Dirección:</strong> Belgrano 758, Zárate, Argentina</p>
+    </div>
+
+    <!-- Redes Sociales -->
+    <div class="mt-8 flex justify-center space-x-6">
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/share/1A3nmFWsv2/" target="_blank" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/feelsafe_company?igsh=MTZkenFhNmNqaHoyeA==" target="_blank" class="bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-white p-3 rounded-full hover:opacity-90 transition">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@feelsafecompany?is_from_webapp=1&sender_device=pc" target="_blank" class="bg-black text-white p-3 rounded-full hover:bg-gray-800 transition">
+        <i class="fab fa-tiktok"></i>
+      </a>
+      <!-- YouTube -->
+      <a href="https://www.youtube.com/channel/UC4OAEaU37FH2aGOaUAWS4Wg" target="_blank" class="bg-red-600 text-white p-3 rounded-full hover:bg-red-700 transition">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="bg-black text-white py-8 text-center w-full z-0 relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <p>&copy; 2025 S.A.P.E. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+
+  <!-- Scripts de AOS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000, // Duración de animaciones
+      once: true // Se anima una sola vez
+    });
+  </script>
+
+</body>
+</html>
