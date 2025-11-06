@@ -12,7 +12,7 @@ Adafruit_MPU6050 mpu;
 
 // ======= CONFIG WiFi =======
 const char* ssid = "Starlink";
-const char* password = "arian2727";
+const char* password = "Adrian2727";
 
 // ======= CONFIG TELEGRAM =======
 const char* botToken = "8246929061:AAHLgjUnfXi9KtNQLomTgcjQ3xlXAslGoes";
