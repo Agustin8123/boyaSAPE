@@ -5,6 +5,8 @@
 .pileta {
     background-image: url(pileta.jpg);
     filter: brightness(95%);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .piletap {
