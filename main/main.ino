@@ -8,7 +8,6 @@
 #include <Wire.h>
 
 #define RELE_PIN 19
-#define BTN_PIN 0 // Botón BOOT (derecha del USB)
 
 Adafruit_MPU6050 mpu;
 WebServer server(80);
@@ -24,7 +23,7 @@ String chatID = "";
 bool modoConfig = false;
 
 // ======= CONFIGURACIÓN FIJA =======
-const char* botToken = "8246929061:AAHLgjUnfXi9KtNQLomTgcjQ3xlXAslGoes"; // Token fijo
+const char* botToken = "8246929061:AAHLgjUnfXi9KtNQLomTgcjQ3xlXAslGoes";
 
 // ======= Guardar datos en SPIFFS =======
 void guardarConfig() {
@@ -183,15 +182,8 @@ void setup() {
   Serial.begin(115200);
   Wire.begin(21, 22);
   pinMode(RELE_PIN, OUTPUT);
-  pinMode(BTN_PIN, INPUT_PULLUP);
   SPIFFS.begin(true);
   xMutex = xSemaphoreCreateMutex();
-
-  // Si mantienes pulsado el botón al arrancar, borra la configuración
-  unsigned long start = millis();
-  while (digitalRead(BTN_PIN) == LOW) {
-    if (millis() - start > 4000) borrarConfig();
-  }
 
   if (!cargarConfig()) {
     iniciarModoConfig();
@@ -227,6 +219,14 @@ void setup() {
   xTaskCreatePinnedToCore(TaskNet, "TaskNet", 8192, NULL, 1, NULL, 0);
 }
 
+// ======= LOOP =======
 void loop() {
-  vTaskDelay(1000);
+  if (Serial.available()) {
+    String comando = Serial.readStringUntil('\n');
+    comando.trim();
+    if (comando.equalsIgnoreCase("eliminar")) {
+      borrarConfig();
+    }
+  }
+  vTaskDelay(100);
 }
