@@ -1,0 +1,126 @@
+/* Fuente general y reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0d0d0d;
+  color: #e5e5e5;
+  font-family: "Noto Sans", sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+}
+
+.contenedor {
+  background: #141414;
+  padding: 40px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.1);
+  border: 1px solid #1f1f1f;
+}
+
+/* Títulos */
+.titulo {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #00ffc8;
+}
+
+.descripcion {
+  font-size: 15px;
+  margin-bottom: 25px;
+  color: #bbbbbb;
+}
+
+/* Imagen del producto */
+.producto {
+  width: 220px;
+  margin: 0 auto 25px auto;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.producto:hover {
+  transform: scale(1.05);
+}
+
+/* Formulario */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: left;
+}
+
+label span {
+  font-size: 14px;
+  color: #00ffc8;
+}
+
+input, textarea {
+  width: 100%;
+  margin-top: 5px;
+  padding: 12px;
+  background: #1c1c1c;
+  color: #e5e5e5;
+  border: 1px solid #333;
+  border-radius: 8px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+input:focus, textarea:focus {
+  border-color: #00ffc8;
+  box-shadow: 0 0 10px rgba(0, 255, 200, 0.2);
+  outline: none;
+}
+
+/* Botón */
+.btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  background: #00ffc8;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  background: #00caa0;
+  transform: scale(1.03);
+}
+
+/* Botón volver */
+.volver {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 10px 18px;
+  background: #181818;
+  color: #00ffc8;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.volver:hover {
+  background: #00ffc8;
+  color: black;
+  transform: scale(1.05);
+}
+
+/* Footer */
+.pie {
+  margin-top: 40px;
+  font-size: 12px;
+  color: #777;
+}
